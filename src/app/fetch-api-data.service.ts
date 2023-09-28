@@ -11,116 +11,61 @@ const apiUrl = 'https://my-flix-8675-e6ac611a51d9.herokuapp.com/';
   providedIn: 'root'
 })
 
-export class UserRegistrationService {
+export class FetchApiDataService {
+
   // Inject the HttpClient module to the constructor params
- // This will provide HttpClient to the entire class, making it available via this.http
-  constructor(private http: HttpClient) {
+  // This will provide HttpClient to the entire class, making it available via this.http
+  constructor(private http: HttpClient) { 
+
   }
- // Making the api call for the user registration endpoint
-  public userRegistration(newUserDetails: any): Observable<any> {
-    console.log(newUserDetails);
-    return this.http.post(apiUrl + 'users', newUserDetails).pipe(
+
+// --------------------------------------------------------------------------------------------------------------------------
+
+  // Making the api call for the user registration endpoint
+  public userRegistration(userDetails: any): Observable<any> {
+    console.log(userDetails);
+    return this.http.post(apiUrl + 'users', userDetails).pipe(
     catchError(this.handleError)
     );
   }
 
-private handleError(error: HttpErrorResponse): any {
-    if (error.error instanceof ErrorEvent) {
-    console.error('Some error occurred:', error.error.message);
-    } else {
-    console.error(
-        `Error Status code ${error.status}, ` +
-        `Error body is: ${error.error}`);
-    }
-    return throwError(
-    'Something bad happened; please try again later.');
-  }
-}
-
 // --------------------------------------------------------------------------------------------------------------------------
 
-export class UserLoginService {
-
-  constructor(private http: HttpClient) {
-  }
-
+  // Making the api call for the user login endpoint
   public userLogin(loginDetails: any): Observable<any> {
     return this.http.post(apiUrl + 'login/', loginDetails).pipe(
     catchError(this.handleError)
     );
   }
 
-private handleError(error: HttpErrorResponse): any {
-    if (error.error instanceof ErrorEvent) {
-    console.error('Some error occurred:', error.error.message);
-    } else {
-    console.error(
-        `Error Status code ${error.status}, ` +
-        `Error body is: ${error.error}`);
-    }
-    return throwError(
-    'Something bad happened; please try again later.');
-  }
-}
+// --------------------------------------------------------------------------------------------------------------------------
+
+  // getAllMovies(): Observable<any> {
+  //   const token = localStorage.getItem('token');
+  //   return this.http.get(apiUrl + 'movies', {headers: new HttpHeaders(
+  //     {
+  //       Authorization: 'Bearer ' + token,
+  //     })}).pipe(
+  //     map(this.extractResponseData),
+  //     catchError(this.handleError)
+  //   );
+  // }
+
+  // // Non-typed response extraction
+  // private extractResponseData(res: Response): any {
+  //   const body = res;
+  //   return body || { };
+  // }
 
 // --------------------------------------------------------------------------------------------------------------------------
 
-export class GetAllMoviesService {
-
-  constructor(private http: HttpClient) {
-  }
-
-  public getAllMovies(token: any): Observable<any> {
-    return this.http.get(apiUrl + 'movies', token).pipe(
-    catchError(this.handleError)
-    );
-  }
-
-private handleError(error: HttpErrorResponse): any {
-    if (error.error instanceof ErrorEvent) {
-    console.error('Some error occurred:', error.error.message);
-    } else {
-    console.error(
-        `Error Status code ${error.status}, ` +
-        `Error body is: ${error.error}`);
-    }
-    return throwError(
-    'Something bad happened; please try again later.');
-  }
-}
-
-// --------------------------------------------------------------------------------------------------------------------------
-
-export class GetMovieService {
-
-  constructor(private http: HttpClient) {
-  }
-
-  public getMovie(token: any, title: any): Observable<any> {
+  getMovie(token: any, title: any): Observable<any> {
     return this.http.get(apiUrl + 'movies/' + title, token).pipe(
     catchError(this.handleError)
     );
   }
 
-private handleError(error: HttpErrorResponse): any {
-    if (error.error instanceof ErrorEvent) {
-    console.error('Some error occurred:', error.error.message);
-    } else {
-    console.error(
-        `Error Status code ${error.status}, ` +
-        `Error body is: ${error.error}`);
-    }
-    return throwError(
-    'Something bad happened; please try again later.');
-  }
-}
-
 // --------------------------------------------------------------------------------------------------------------------------
-
-export class GetDirectorService {
-
-  constructor(private http: HttpClient) {
-  }
 
   public getDirector(token: any, director: any): Observable<any> {
     return this.http.get(apiUrl + 'movies/directors/' + director, token).pipe(
@@ -128,25 +73,7 @@ export class GetDirectorService {
     );
   }
 
-private handleError(error: HttpErrorResponse): any {
-    if (error.error instanceof ErrorEvent) {
-    console.error('Some error occurred:', error.error.message);
-    } else {
-    console.error(
-        `Error Status code ${error.status}, ` +
-        `Error body is: ${error.error}`);
-    }
-    return throwError(
-    'Something bad happened; please try again later.');
-  }
-}
-
 // --------------------------------------------------------------------------------------------------------------------------
-
-export class GetGenreService {
-
-  constructor(private http: HttpClient) {
-  }
 
   public getGenre(token: any, genre: any): Observable<any> {
     return this.http.get(apiUrl + 'movies/genres/' + genre, token).pipe(
@@ -154,26 +81,7 @@ export class GetGenreService {
     );
   }
 
-private handleError(error: HttpErrorResponse): any {
-    if (error.error instanceof ErrorEvent) {
-    console.error('Some error occurred:', error.error.message);
-    } else {
-    console.error(
-        `Error Status code ${error.status}, ` +
-        `Error body is: ${error.error}`);
-    }
-    return throwError(
-    'Something bad happened; please try again later.');
-  }
-}
-
 // --------------------------------------------------------------------------------------------------------------------------
-
-// Will also display an array of the users favorites movies
-export class GetUserService {
- 
-  constructor(private http: HttpClient) {
-  }
 
   public getUser(token: any, username: any): Observable<any> {
     return this.http.get(apiUrl + 'users' + username, token).pipe(
@@ -181,25 +89,7 @@ export class GetUserService {
     );
   }
 
-private handleError(error: HttpErrorResponse): any {
-    if (error.error instanceof ErrorEvent) {
-    console.error('Some error occurred:', error.error.message);
-    } else {
-    console.error(
-        `Error Status code ${error.status}, ` +
-        `Error body is: ${error.error}`);
-    }
-    return throwError(
-    'Something bad happened; please try again later.');
-  }
-}
-
 // --------------------------------------------------------------------------------------------------------------------------
-
-export class AddFavoriteService {
-
-  constructor(private http: HttpClient) {
-  }
 
   public addFavorite(username: any, movie: any, token: any): Observable<any> {
     return this.http.post(apiUrl + 'users/' + username + 'movies/' + movie, token).pipe(
@@ -207,25 +97,7 @@ export class AddFavoriteService {
     );
   }
 
-private handleError(error: HttpErrorResponse): any {
-    if (error.error instanceof ErrorEvent) {
-    console.error('Some error occurred:', error.error.message);
-    } else {
-    console.error(
-        `Error Status code ${error.status}, ` +
-        `Error body is: ${error.error}`);
-    }
-    return throwError(
-    'Something bad happened; please try again later.');
-  }
-}
-
 // --------------------------------------------------------------------------------------------------------------------------
-
-export class EditUserService {
-
-  constructor(private http: HttpClient) {
-  }
 
   public editUser(userDetails: any, username: any, token: any): Observable<any> {
     console.log(userDetails);
@@ -234,25 +106,7 @@ export class EditUserService {
     );
   }
 
-private handleError(error: HttpErrorResponse): any {
-    if (error.error instanceof ErrorEvent) {
-    console.error('Some error occurred:', error.error.message);
-    } else {
-    console.error(
-        `Error Status code ${error.status}, ` +
-        `Error body is: ${error.error}`);
-    }
-    return throwError(
-    'Something bad happened; please try again later.');
-  }
-}
-
 // --------------------------------------------------------------------------------------------------------------------------
-
-export class DeleteUserService {
-
-  constructor(private http: HttpClient) {
-  }
 
   public deleteUser(username: any, token: any): Observable<any> {
     return this.http.delete(apiUrl + 'users/' + username, token).pipe(
@@ -260,25 +114,7 @@ export class DeleteUserService {
     );
   }
 
-private handleError(error: HttpErrorResponse): any {
-    if (error.error instanceof ErrorEvent) {
-    console.error('Some error occurred:', error.error.message);
-    } else {
-    console.error(
-        `Error Status code ${error.status}, ` +
-        `Error body is: ${error.error}`);
-    }
-    return throwError(
-    'Something bad happened; please try again later.');
-  }
-}
-
 // --------------------------------------------------------------------------------------------------------------------------
-
-export class RemoveFavoriteService {
-
-  constructor(private http: HttpClient) {
-  }
 
   public removeFavorite(username: any, movie: any, token: any): Observable<any> {
     return this.http.delete(apiUrl + 'users/' + username + 'movies/' + movie, token).pipe(
@@ -286,7 +122,9 @@ export class RemoveFavoriteService {
     );
   }
 
-private handleError(error: HttpErrorResponse): any {
+// --------------------------------------------------------------------------------------------------------------------------
+
+  private handleError(error: HttpErrorResponse): any {
     if (error.error instanceof ErrorEvent) {
     console.error('Some error occurred:', error.error.message);
     } else {
