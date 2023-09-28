@@ -30,6 +30,8 @@ export class UserLoginFormComponent {
   // This is the function responsible for sending the form inputs to the backend
   loginUser(): void {
       this.fetchApiData.userLogin(this.userData).subscribe((response) => {
+      localStorage.setItem('user', JSON.stringify(response.user));
+      localStorage.setItem('token', response.token);
       this.dialogRef.close();
       this.snackBar.open(response, 'OK', {
           duration: 2000

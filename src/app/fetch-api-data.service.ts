@@ -33,7 +33,7 @@ export class FetchApiDataService {
 
   // Making the api call for the user login endpoint
   public userLogin(loginDetails: any): Observable<any> {
-    return this.http.post(apiUrl + 'login/', loginDetails).pipe(
+    return this.http.post(apiUrl + 'login', loginDetails).pipe(
     catchError(this.handleError)
     );
   }
